@@ -16,16 +16,19 @@ import Cardiology from "../assets/images/Cardiology.png";
 import Neurology from "../assets/images/Neurology.png";
 import Pulmonology from "../assets/images/Pulmonology.png";
 import Urology from "../assets/images/Urology.png";
+import Gastroenterology from "../assets/images/Gastroenterology.png";
+import InternalMedicine from "../assets/images/InternalMedicine.png";
+import Doctor from "../assets/images/Doctor.png";
 
 const iconMap = {
   "heart-pulse": <img src={Cardiology} alt="Cardiology" />,
-  eye: <Eye className="h-12 w-12 text-blue-500" />,
-  droplet: <Droplet className="h-12 w-12 text-blue-500" />,
+  eye: <img src={Doctor} alt="Doctor" />,
+  droplet: <img src={InternalMedicine} alt="InternalMedicine" />,
   lungs: <img src={Pulmonology} alt="Pulmonology" />,
   brain: <img src={Neurology} alt="Neurology" />,
   tooth: <Tooth className="h-12 w-12 text-blue-500" />,
   kidney: <img src={Urology} alt="Urology" />,
-  stomach: <Stomach className="h-12 w-12 text-blue-500" />,
+  stomach: <img src={Gastroenterology} alt="Gastroenterology" />,
 };
 
 const ClinicCard = ({ id, name, icon, description }) => {

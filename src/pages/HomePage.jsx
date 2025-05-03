@@ -1,7 +1,7 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import ClinicCard from '../components/ClinicCard';
-import { useClinic } from '../contexts/ClinicContext';
+import React from "react";
+import { motion } from "framer-motion";
+import ClinicCard from "../components/ClinicCard";
+import { useClinic } from "../contexts/ClinicContext";
 
 const HomePage = () => {
   const { availableClinics } = useClinic();
@@ -11,9 +11,9 @@ const HomePage = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const itemVariants = {
@@ -22,10 +22,10 @@ const HomePage = () => {
       y: 0,
       opacity: 1,
       transition: {
-        type: 'spring',
-        stiffness: 80
-      }
-    }
+        type: "spring",
+        stiffness: 80,
+      },
+    },
   };
 
   return (
@@ -40,7 +40,8 @@ const HomePage = () => {
           Your Health, Our Priority
         </h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          Select a specialty clinic to schedule your appointment with our expert healthcare professionals.
+          Select a specialty clinic to schedule your appointment with our expert
+          healthcare professionals.
         </p>
       </motion.div>
 
@@ -68,7 +69,9 @@ const HomePage = () => {
         transition={{ delay: 1, duration: 0.6 }}
         className="mt-16 p-8 bg-white/80 backdrop-blur-md rounded-xl shadow-md"
       >
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Why Choose Us?</h2>
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+          Why Choose Us?
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="flex flex-col items-center text-center p-4">
             <div className="bg-blue-100 p-3 rounded-full mb-4">
@@ -87,9 +90,12 @@ const HomePage = () => {
                 ></path>
               </svg>
             </div>
-            <h3 className="text-lg font-medium text-gray-800 mb-2">Expert Care</h3>
+            <h3 className="text-lg font-medium text-gray-800 mb-2">
+              Expert Care
+            </h3>
             <p className="text-gray-600">
-              Our highly qualified medical professionals provide the best care for your needs.
+              Our highly qualified medical professionals provide the best care
+              for your needs.
             </p>
           </div>
           <div className="flex flex-col items-center text-center p-4">
@@ -109,7 +115,9 @@ const HomePage = () => {
                 ></path>
               </svg>
             </div>
-            <h3 className="text-lg font-medium text-gray-800 mb-2">Fast Appointments</h3>
+            <h3 className="text-lg font-medium text-gray-800 mb-2">
+              Fast Appointments
+            </h3>
             <p className="text-gray-600">
               Quick and easy appointment scheduling with minimal waiting times.
             </p>
@@ -131,9 +139,12 @@ const HomePage = () => {
                 ></path>
               </svg>
             </div>
-            <h3 className="text-lg font-medium text-gray-800 mb-2">Modern Facilities</h3>
+            <h3 className="text-lg font-medium text-gray-800 mb-2">
+              Modern Facilities
+            </h3>
             <p className="text-gray-600">
-              State-of-the-art equipment and comfortable environments for your treatment.
+              State-of-the-art equipment and comfortable environments for your
+              treatment.
             </p>
           </div>
         </div>
