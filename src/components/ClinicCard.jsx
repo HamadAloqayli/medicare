@@ -18,15 +18,15 @@ import Pulmonology from "../assets/images/Pulmonology.png";
 import Urology from "../assets/images/Urology.png";
 import Gastroenterology from "../assets/images/Gastroenterology.png";
 import InternalMedicine from "../assets/images/InternalMedicine.png";
-import Doctor from "../assets/images/Doctor.png";
+import GeneralPractitioner from "../assets/images/GeneralPractitioner.png";
 
 const iconMap = {
   "heart-pulse": <img src={Cardiology} alt="Cardiology" />,
-  eye: <img src={Doctor} alt="Doctor" />,
+  stethoscope: <img src={GeneralPractitioner} alt="GeneralPractitioner" />,
   droplet: <img src={InternalMedicine} alt="InternalMedicine" />,
   lungs: <img src={Pulmonology} alt="Pulmonology" />,
   brain: <img src={Neurology} alt="Neurology" />,
-  tooth: <Tooth className="h-12 w-12 text-blue-500" />,
+  // tooth: <Tooth className="h-12 w-12 text-blue-500" />,
   kidney: <img src={Urology} alt="Urology" />,
   stomach: <img src={Gastroenterology} alt="Gastroenterology" />,
 };
@@ -43,6 +43,7 @@ const ClinicCard = ({ id, name, icon, description }) => {
   return (
     <motion.div
       className="bg-white rounded-xl shadow-md overflow-hidden cursor-pointer transform perspective-1000"
+      style={id === "stethoscope" ? { height: "100%" } : {}}
       whileHover={{
         scale: 1.03,
         rotateY: 5,
@@ -53,13 +54,17 @@ const ClinicCard = ({ id, name, icon, description }) => {
       transition={{ type: "spring", stiffness: 300 }}
       onClick={handleClick}
     >
-      <div className="p-8 flex flex-col items-center text-center">
+      <div
+        className={`p-8 flex flex-col items-center ${
+          id === "stethoscope" ? "text-justify hyphens-auto" : "text-center"
+        }`}
+      >
         <motion.div
-          className="mb-4 bg-blue-50 p-4 rounded-full"
-          whileHover={{
-            rotate: [0, -10, 10, -10, 0],
-            transition: { duration: 0.5 },
-          }}
+          className={`mb-4 bg-blue-50 ${
+            id === "stethoscope"
+              ? "rounded-xl w-full"
+              : "rounded-full w-[200px] p-8"
+          }`}
         >
           {iconMap[icon]}
         </motion.div>

@@ -49,10 +49,18 @@ const HomePage = () => {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 grid-rows-2"
       >
         {availableClinics.map((clinic) => (
-          <motion.div key={clinic.id} variants={itemVariants}>
+          <motion.div
+            key={clinic.id}
+            variants={itemVariants}
+            className={
+              clinic.id === "stethoscope"
+                ? "row-span-2 lg:order-none order-1"
+                : ""
+            }
+          >
             <ClinicCard
               id={clinic.id}
               name={clinic.name}

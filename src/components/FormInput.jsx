@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const FormInput = ({
   label,
@@ -13,11 +13,15 @@ const FormInput = ({
 }) => {
   return (
     <div className="mb-6">
-      <label htmlFor={id} className="block mb-2 text-sm font-medium text-gray-700">
-        {label} {required && <span className="text-red-500">*</span>}
+      <label
+        htmlFor={id}
+        className="block mb-2 text-sm font-medium text-gray-700"
+      >
+        {label}
+        {/* {required && <span className="text-red-500">*</span>} */}
       </label>
-      
-      {type === 'select' ? (
+
+      {type === "select" ? (
         <select
           id={id}
           className="bg-white border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 transition-all duration-200"
@@ -26,7 +30,7 @@ const FormInput = ({
           required={required}
         >
           <option value="" disabled selected>
-            {placeholder || 'Select an option'}
+            {placeholder || "Select an option"}
           </option>
           {options.map((option) => (
             <option key={option.value} value={option.value}>
@@ -34,7 +38,7 @@ const FormInput = ({
             </option>
           ))}
         </select>
-      ) : type === 'file' ? (
+      ) : type === "file" ? (
         <div className="flex items-center justify-center w-full">
           <label
             htmlFor={id}
@@ -42,7 +46,7 @@ const FormInput = ({
           >
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
               <svg
-                className="w-8 h-8 mb-3 text-blue-500"
+                className="w-10 h-10 mb-3 text-blue-500"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -56,9 +60,11 @@ const FormInput = ({
                 ></path>
               </svg>
               <p className="mb-1 text-sm text-gray-500">
-                <span className="font-semibold">Click to upload</span> or drag and drop
+                <span className="font-semibold">Click to upload</span>
               </p>
-              <p className="text-xs text-gray-500">Medical files or documents</p>
+              <p className="text-xs text-gray-500">
+                Medical files or documents
+              </p>
             </div>
             <input
               id={id}
