@@ -19,6 +19,7 @@ import Urology from "../assets/images/Urology.png";
 import Gastroenterology from "../assets/images/Gastroenterology.png";
 import InternalMedicine from "../assets/images/InternalMedicine.png";
 import GeneralPractitioner from "../assets/images/GeneralPractitioner.png";
+import kpi from "../assets/images/kpi.png";
 
 const iconMap = {
   "heart-pulse": <img src={Cardiology} alt="Cardiology" />,
@@ -55,7 +56,7 @@ const ClinicCard = ({ id, name, icon, description }) => {
       onClick={handleClick}
     >
       <div
-        className={`p-8 flex flex-col items-center ${
+        className={`p-8 flex flex-col items-center h-full ${
           id === "stethoscope" ? "text-justify hyphens-auto" : "text-center"
         }`}
       >
@@ -70,6 +71,10 @@ const ClinicCard = ({ id, name, icon, description }) => {
         </motion.div>
         <h3 className="text-xl font-semibold text-gray-800 mb-2">{name}</h3>
         <p className="text-gray-600 text-sm">{description}</p>
+
+        {id === "stethoscope" && (
+          <img src={kpi} alt="kpi" className="block mt-auto opacity-50" />
+        )}
       </div>
     </motion.div>
   );

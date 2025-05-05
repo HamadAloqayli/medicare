@@ -60,10 +60,14 @@ const FormInput = ({
                 ></path>
               </svg>
               <p className="mb-1 text-sm text-gray-500">
-                <span className="font-semibold">Click to upload</span>
+                <span className="font-semibold">
+                  {id === "camera" ? "Upload picture" : "Upload file"}
+                </span>
               </p>
               <p className="text-xs text-gray-500">
-                Medical files or documents
+                {id === "camera"
+                  ? "Medical issue image"
+                  : "Medical file or document"}
               </p>
             </div>
             <input

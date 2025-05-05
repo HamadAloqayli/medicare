@@ -18,7 +18,7 @@ export const clinics = [
     name: "Internal Medicine",
     icon: "droplet",
     description:
-      "Specialists in the urinary tract system and male reproductive organs.",
+      "Specialists in adult care, focusing on diagnosis and treatment of internal diseases.",
   },
   {
     id: "pulmonology",

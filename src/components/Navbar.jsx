@@ -1,6 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ActivitySquare } from 'lucide-react';
+import React from "react";
+import { Link } from "react-router-dom";
+import { ActivitySquare } from "lucide-react";
+import { FaUser } from "react-icons/fa";
 
 const Navbar = () => {
   return (
@@ -16,7 +17,15 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="flex items-center">
-            <Link 
+            <button className="bg-blue-50 border-2 border-blue-200 rounded-md hover:shadow-md hover:shadow-blue-100 transition-all duration-300 ease-out  flex justify-center items-center gap-2 p-2">
+              <FaUser className="text-blue-400 text-sm" />
+
+              <span className="text-gray-700 text-sm font-medium">
+                Khalid Abdulaziz
+              </span>
+            </button>
+
+            {/* <Link 
               to="/" 
               className="text-gray-700 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >
@@ -27,7 +36,7 @@ const Navbar = () => {
               className="ml-4 text-gray-700 hover:text-blue-500 px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >
               Appointment
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

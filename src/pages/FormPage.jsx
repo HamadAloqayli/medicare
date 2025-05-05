@@ -78,12 +78,11 @@ const FormPage = () => {
             <CheckCircle className="h-10 w-10 text-green-500" />
           </div>
           <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-            Appointment Request Submitted!
+            Request Submitted!
           </h2>
           <p className="text-gray-600 mb-6">
-            We've received your appointment request for {selectedClinic.name}.
-            Our team will contact you shortly to confirm your appointment
-            details.
+            We've received your request for {selectedClinic.name}. Our team will
+            contact you shortly to confirm your request details.
           </p>
           <p className="text-sm text-gray-500">Redirecting to home page...</p>
         </div>
@@ -103,10 +102,10 @@ const FormPage = () => {
             onClick={() => navigate("/")}
             className="inline-flex items-center text-white hover:underline mb-2"
           >
-            <ArrowLeft className="w-4 h-4 mr-1" /> Back to Clinics
+            <ArrowLeft className="w-4 h-4 mr-1" /> Back
           </button>
           <h1 className="text-2xl font-bold text-white">
-            {selectedClinic.name} Appointment Request
+            {selectedClinic.name} Analysis
           </h1>
         </div>
 
@@ -117,7 +116,7 @@ const FormPage = () => {
               className={`px-4 py-2 rounded-l-lg ${
                 !isCameraMode
                   ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-gray-700"
+                  : "bg-blue-50 text-gray-700"
               }`}
               onClick={() => setIsCameraMode(false)}
             >
@@ -128,7 +127,7 @@ const FormPage = () => {
               className={`px-4 py-2 rounded-r-lg ${
                 isCameraMode
                   ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-gray-700"
+                  : "bg-blue-50 text-gray-700"
               }`}
               onClick={() => setIsCameraMode(true)}
             >
@@ -147,7 +146,7 @@ const FormPage = () => {
             />
           ) : (
             <FormInput
-              label="Medical Records or Documents"
+              label="Medical Record or Document"
               type="file"
               id="file"
               accept=".pdf,.jpg,.jpeg,.png"
@@ -224,7 +223,7 @@ const FormPage = () => {
                   Processing...
                 </>
               ) : (
-                "Submit Appointment Request"
+                "Start Analysis"
               )}
             </button>
           </div>

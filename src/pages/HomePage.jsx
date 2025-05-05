@@ -34,14 +34,14 @@ const HomePage = () => {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-center mb-16"
+        className="mb-16"
       >
         <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-          Your Health, Our Priority
+          Welcome Khalid 👋
         </h1>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          Select a specialty clinic to schedule your appointment with our expert
-          healthcare professionals.
+        <p className="text-xl text-gray-600 max-w-3xl">
+          Check your health using artificial intelligence to analyze medical
+          reports
         </p>
       </motion.div>
 
@@ -71,7 +71,7 @@ const HomePage = () => {
         ))}
       </motion.div>
 
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 0.6 }}
@@ -156,7 +156,7 @@ const HomePage = () => {
             </p>
           </div>
         </div>
-      </motion.div>
+      </motion.div> */}
     </div>
   );
 };
