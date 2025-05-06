@@ -20,6 +20,7 @@ import Gastroenterology from "../assets/images/Gastroenterology.png";
 import InternalMedicine from "../assets/images/InternalMedicine.png";
 import GeneralPractitioner from "../assets/images/GeneralPractitioner.png";
 import kpi from "../assets/images/kpi.png";
+import { ActivitySquare } from "lucide-react";
 
 const iconMap = {
   "heart-pulse": <img src={Cardiology} alt="Cardiology" />,
@@ -73,7 +74,8 @@ const ClinicCard = ({ id, name, icon, description }) => {
         <p className="text-gray-600 text-sm">{description}</p>
 
         {id === "stethoscope" && (
-          <img src={kpi} alt="kpi" className="block mt-auto opacity-50" />
+          // <img src={kpi} alt="kpi" className="block mt-auto opacity-50" />
+          <ActivitySquare className="block mt-5 lg:mt-auto opacity-10 h-40 w-40 text-blue-500" />
         )}
       </div>
     </motion.div>

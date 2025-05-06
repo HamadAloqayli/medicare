@@ -13,13 +13,11 @@ const FormPage = () => {
   const [isCameraMode, setIsCameraMode] = useState(false);
 
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    appointmentType: "",
-    preferredDate: "",
-    symptoms: "",
+    modelType: "",
+    symptomsDescription: "",
+    clinic: selectedClinic?.name,
     file: null,
+    picture: null,
   });
 
   const handleInputChange = (e) => {
@@ -27,43 +25,44 @@ const FormPage = () => {
     setFormData({ ...formData, [id]: value });
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = (e, fileType) => {
     if (e.target.files && e.target.files[0]) {
-      setFormData({ ...formData, file: e.target.files[0] });
+      fileType === "picture"
+        ? setFormData({ ...formData, picture: e.target.files[0] })
+        : setFormData({ ...formData, file: e.target.files[0] });
+    }
+  };
+
+  const resetInput = (inputType) => {
+    if (inputType === "file") {
+      setFormData({ ...formData, file: null });
+    }
+    if (inputType === "picture") {
+      setFormData({ ...formData, picture: null });
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    // setIsSubmitting(true);
+
+    console.log(formData);
 
     // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
+    // setTimeout(() => {
+    //   setIsSubmitting(false);
+    //   setIsSuccess(true);
 
-      // Reset after showing success message
-      setTimeout(() => {
-        setIsSuccess(false);
-        navigate("/");
-      }, 3000);
-    }, 1500);
+    //   // Reset after showing success message
+    //   setTimeout(() => {
+    //     setIsSuccess(false);
+    //     navigate("/");
+    //   }, 3000);
+    // }, 1500);
   };
 
   if (!selectedClinic) {
-    return (
-      <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto text-center">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-          Please select a clinic first
-        </h2>
-        <button
-          onClick={() => navigate("/")}
-          className="inline-flex items-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" /> Go to Clinics
-        </button>
-      </div>
-    );
+    return (window.location = "/");
   }
 
   if (isSuccess) {
@@ -110,7 +109,7 @@ const FormPage = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="p-6">
-          <div className="flex items-center justify-center mb-4">
+          <div className="flex sm:hidden items-center justify-center mb-4">
             <button
               type="button"
               className={`px-4 py-2 rounded-l-lg ${
@@ -143,6 +142,8 @@ const FormPage = () => {
               accept="image/*"
               capture="camera"
               onChange={handleFileChange}
+              value={formData.picture}
+              resetInput={resetInput}
             />
           ) : (
             <FormInput
@@ -151,6 +152,8 @@ const FormPage = () => {
               id="file"
               accept=".pdf,.jpg,.jpeg,.png"
               onChange={handleFileChange}
+              value={formData.file}
+              resetInput={resetInput}
             />
           )}
 
@@ -158,8 +161,8 @@ const FormPage = () => {
             <FormInput
               label="Model Type"
               type="select"
-              id="appointmentType"
-              value={formData.appointmentType}
+              id="modelType"
+              value={formData.modelType}
               onChange={handleInputChange}
               // required
               options={[
@@ -178,12 +181,12 @@ const FormPage = () => {
               {/* <span className="text-red-500">*</span> */}
             </label>
             <textarea
-              id="symptoms"
+              id="symptomsDescription"
               rows={4}
               className="bg-white border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 transition-all duration-200"
               placeholder="Please describe your symptoms"
               // required
-              value={formData.symptoms}
+              value={formData.symptomsDescription}
               onChange={handleInputChange}
             ></textarea>
           </div>
