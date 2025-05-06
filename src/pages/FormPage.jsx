@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import FormInput from "../components/FormInput";
 import { useClinic } from "../contexts/ClinicContext";
-import { ArrowLeft, CheckCircle } from "lucide-react";
+import { ArrowLeft, CheckCircle, Camera, RotateCw, X } from "lucide-react";
 
 const FormPage = () => {
   const { selectedClinic } = useClinic();
@@ -11,6 +11,7 @@ const FormPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isCameraMode, setIsCameraMode] = useState(false);
+  const [facingMode, setFacingMode] = useState("environment"); // 'user' for front, 'environment' for back
   const videoRef = useRef(null);
   const [stream, setStream] = useState(null);
 
@@ -23,7 +24,6 @@ const FormPage = () => {
   });
 
   useEffect(() => {
-    // Clean up camera stream when component unmounts
     return () => {
       if (stream) {
         stream.getTracks().forEach((track) => track.stop());
@@ -34,7 +34,7 @@ const FormPage = () => {
   const startCamera = async () => {
     try {
       const mediaStream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "environment" },
+        video: { facingMode },
         audio: false,
       });
       setStream(mediaStream);
@@ -43,7 +43,6 @@ const FormPage = () => {
       }
     } catch (err) {
       console.error("Error accessing camera:", err);
-      // Fallback to file input if camera access fails
       setIsCameraMode(false);
     }
   };
@@ -52,6 +51,28 @@ const FormPage = () => {
     if (stream) {
       stream.getTracks().forEach((track) => track.stop());
       setStream(null);
+    }
+  };
+
+  const flipCamera = async () => {
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
+
+      const newFacingMode = facingMode === "user" ? "environment" : "user";
+      setFacingMode(newFacingMode);
+
+      try {
+        const mediaStream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: newFacingMode },
+          audio: false,
+        });
+        setStream(mediaStream);
+        if (videoRef.current) {
+          videoRef.current.srcObject = mediaStream;
+        }
+      } catch (err) {
+        console.error("Error flipping camera:", err);
+      }
     }
   };
 
@@ -223,8 +244,9 @@ const FormPage = () => {
                       setFormData({ ...formData, picture: null });
                       startCamera();
                     }}
-                    className="flex-1 py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                    className="flex-1 py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2"
                   >
+                    <RotateCw className="w-4 h-4" />
                     Retake
                   </button>
                   <button
@@ -233,9 +255,10 @@ const FormPage = () => {
                       stopCamera();
                       setIsCameraMode(false);
                     }}
-                    className="py-2 px-4 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+                    className="py-2 px-4 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 flex items-center justify-center gap-2"
                   >
-                    Use File Instead
+                    <X className="w-4 h-4" />
+                    Cancel
                   </button>
                 </div>
               </div>
@@ -249,14 +272,25 @@ const FormPage = () => {
                     muted
                     className="w-full h-auto max-h-64 object-contain"
                   />
+                  <div className="absolute top-2 right-2">
+                    <button
+                      type="button"
+                      onClick={flipCamera}
+                      className="p-2 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-70 transition-all"
+                      title="Flip camera"
+                    >
+                      <RotateCw className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
                 <div className="flex gap-2">
                   <button
                     type="button"
                     onClick={captureImage}
-                    className="flex-1 py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                    className="flex-1 py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2"
                   >
-                    Capture Image
+                    <Camera className="w-4 h-4" />
+                    Capture
                   </button>
                   <button
                     type="button"
@@ -264,8 +298,9 @@ const FormPage = () => {
                       stopCamera();
                       setIsCameraMode(false);
                     }}
-                    className="py-2 px-4 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+                    className="py-2 px-4 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 flex items-center justify-center gap-2"
                   >
+                    <X className="w-4 h-4" />
                     Cancel
                   </button>
                 </div>
