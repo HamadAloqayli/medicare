@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import FormInput from "../components/FormInput";
@@ -11,6 +11,8 @@ const FormPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isCameraMode, setIsCameraMode] = useState(false);
+  const videoRef = useRef(null);
+  const [stream, setStream] = useState(null);
 
   const [formData, setFormData] = useState({
     modelType: "",
@@ -20,6 +22,72 @@ const FormPage = () => {
     picture: null,
   });
 
+  useEffect(() => {
+    // Clean up camera stream when component unmounts
+    return () => {
+      if (stream) {
+        stream.getTracks().forEach((track) => track.stop());
+      }
+    };
+  }, [stream]);
+
+  const startCamera = async () => {
+    try {
+      const mediaStream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "environment" },
+        audio: false,
+      });
+      setStream(mediaStream);
+      if (videoRef.current) {
+        videoRef.current.srcObject = mediaStream;
+      }
+    } catch (err) {
+      console.error("Error accessing camera:", err);
+      // Fallback to file input if camera access fails
+      setIsCameraMode(false);
+    }
+  };
+
+  const stopCamera = () => {
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
+      setStream(null);
+    }
+  };
+
+  const toggleCameraMode = (mode) => {
+    if (mode === isCameraMode) return;
+
+    if (mode) {
+      startCamera();
+    } else {
+      stopCamera();
+    }
+    setIsCameraMode(mode);
+  };
+
+  const captureImage = () => {
+    if (!videoRef.current) return;
+
+    const canvas = document.createElement("canvas");
+    canvas.width = videoRef.current.videoWidth;
+    canvas.height = videoRef.current.videoHeight;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+
+    canvas.toBlob(
+      (blob) => {
+        const file = new File([blob], "captured-image.jpg", {
+          type: "image/jpeg",
+        });
+        setFormData({ ...formData, picture: file });
+        stopCamera();
+      },
+      "image/jpeg",
+      0.95
+    );
+  };
+
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
@@ -27,9 +95,12 @@ const FormPage = () => {
 
   const handleFileChange = (e, fileType) => {
     if (e.target.files && e.target.files[0]) {
-      fileType === "picture"
-        ? setFormData({ ...formData, picture: e.target.files[0] })
-        : setFormData({ ...formData, file: e.target.files[0] });
+      const file = e.target.files[0];
+      if (fileType === "picture") {
+        setFormData({ ...formData, picture: file });
+      } else {
+        setFormData({ ...formData, file: file });
+      }
     }
   };
 
@@ -39,6 +110,7 @@ const FormPage = () => {
     }
     if (inputType === "picture") {
       setFormData({ ...formData, picture: null });
+      if (isCameraMode) startCamera();
     }
   };
 
@@ -109,15 +181,15 @@ const FormPage = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="p-6">
-          <div className="flex sm:hidden items-center justify-center mb-4">
+          <div className="flex items-center justify-center mb-4">
             <button
               type="button"
               className={`px-4 py-2 rounded-l-lg ${
                 !isCameraMode
-                  ? "bg-blue-500 text-white"
+                  ? "bg-blue-600 text-white"
                   : "bg-blue-50 text-gray-700"
               }`}
-              onClick={() => setIsCameraMode(false)}
+              onClick={() => toggleCameraMode(false)}
             >
               Upload File
             </button>
@@ -125,33 +197,87 @@ const FormPage = () => {
               type="button"
               className={`px-4 py-2 rounded-r-lg ${
                 isCameraMode
-                  ? "bg-blue-500 text-white"
+                  ? "bg-blue-600 text-white"
                   : "bg-blue-50 text-gray-700"
               }`}
-              onClick={() => setIsCameraMode(true)}
+              onClick={() => toggleCameraMode(true)}
             >
               Take Picture
             </button>
           </div>
 
           {isCameraMode ? (
-            <FormInput
-              label="Take a Picture"
-              type="file"
-              id="camera"
-              accept="image/*"
-              capture="camera"
-              onChange={handleFileChange}
-              value={formData.picture}
-              resetInput={resetInput}
-            />
+            formData.picture ? (
+              <div className="mb-4">
+                <div className="relative bg-gray-100 rounded-lg overflow-hidden mb-2">
+                  <img
+                    src={URL.createObjectURL(formData.picture)}
+                    alt="Captured"
+                    className="w-full h-auto max-h-64 object-contain"
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFormData({ ...formData, picture: null });
+                      startCamera();
+                    }}
+                    className="flex-1 py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  >
+                    Retake
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      stopCamera();
+                      setIsCameraMode(false);
+                    }}
+                    className="py-2 px-4 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+                  >
+                    Use File Instead
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="mb-4">
+                <div className="relative bg-gray-100 rounded-lg overflow-hidden mb-2">
+                  <video
+                    ref={videoRef}
+                    autoPlay
+                    playsInline
+                    muted
+                    className="w-full h-auto max-h-64 object-contain"
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={captureImage}
+                    className="flex-1 py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  >
+                    Capture Image
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      stopCamera();
+                      setIsCameraMode(false);
+                    }}
+                    className="py-2 px-4 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )
           ) : (
             <FormInput
               label="Medical Record or Document"
               type="file"
               id="file"
               accept="*"
-              onChange={handleFileChange}
+              onChange={(e) => handleFileChange(e, "file")}
               value={formData.file}
               resetInput={resetInput}
             />
@@ -164,7 +290,6 @@ const FormPage = () => {
               id="modelType"
               value={formData.modelType}
               onChange={handleInputChange}
-              // required
               options={[
                 { value: "MediCare", label: "MediCare (Fast Response)" },
                 { value: "MediCarePro", label: "MediCare Pro (Secure Model)" },
@@ -177,15 +302,13 @@ const FormPage = () => {
               htmlFor="symptoms"
               className="block mb-2 text-sm font-medium text-gray-700"
             >
-              Symptoms Description{" "}
-              {/* <span className="text-red-500">*</span> */}
+              Symptoms Description
             </label>
             <textarea
               id="symptomsDescription"
               rows={4}
               className="bg-white border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 transition-all duration-200"
               placeholder="Please describe your symptoms"
-              // required
               value={formData.symptomsDescription}
               onChange={handleInputChange}
             ></textarea>
