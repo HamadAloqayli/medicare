@@ -150,7 +150,7 @@ const FormPage = () => {
               label="Medical Record or Document"
               type="file"
               id="file"
-              accept=".pdf,.jpg,.jpeg,.png"
+              accept="*"
               onChange={handleFileChange}
               value={formData.file}
               resetInput={resetInput}
