@@ -32,7 +32,7 @@ const FormInput = ({
           required={required}
         >
           <option value="" disabled>
-            {placeholder || "Select an option"}
+            {placeholder || "أختر النموذج"}
           </option>
           {options.map((option) => (
             <option key={option.value} value={option.value}>
@@ -80,13 +80,13 @@ const FormInput = ({
                   </svg>
                   <p className="mb-1 text-sm text-gray-500">
                     <span className="font-semibold">
-                      {id === "camera" ? "Upload picture" : "Upload file"}
+                      {id === "camera" ? "رفع الصورة" : "رفع الملف"}
                     </span>
                   </p>
                   <p className="text-xs text-gray-500">
                     {id === "camera"
-                      ? "Medical issue image"
-                      : "Medical file or document"}
+                      ? "صورة للمشكلة الصحية"
+                      : "التقرير أو المستند الصحي"}
                   </p>
                 </div>
                 <input
@@ -115,6 +115,13 @@ const FormInput = ({
           value={value}
           onChange={onChange}
         />
+      )}
+      {type === "file" && id !== "camera" && (
+        <p className="text-sm text-gray-500 mt-2">
+          <span className="text-red-500 ml-1">*</span>
+          يمكنك رفع التقارير الصحية، التحاليل، صور الأشعة، وغيرها من المستندات
+          الطبية
+        </p>
       )}
     </div>
   );

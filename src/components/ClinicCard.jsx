@@ -33,12 +33,12 @@ const iconMap = {
   stomach: <img src={Gastroenterology} alt="Gastroenterology" />,
 };
 
-const ClinicCard = ({ id, name, icon, description }) => {
+const ClinicCard = ({ id, name, icon, description, nameAR, descriptionAR }) => {
   const navigate = useNavigate();
   const { setSelectedClinic } = useClinic();
 
   const handleClick = () => {
-    setSelectedClinic({ id, name, icon, description });
+    setSelectedClinic({ id, name, icon, description, nameAR, descriptionAR });
     navigate("/form");
   };
 
@@ -70,12 +70,12 @@ const ClinicCard = ({ id, name, icon, description }) => {
         >
           {iconMap[icon]}
         </motion.div>
-        <h3 className="text-xl font-semibold text-gray-800 mb-2">{name}</h3>
-        <p className="text-gray-600 text-sm">{description}</p>
+        <h3 className="text-xl font-semibold text-gray-800 mb-2">{nameAR}</h3>
+        <p className="text-gray-600 text-sm">{descriptionAR}</p>
 
         {id === "stethoscope" && (
           // <img src={kpi} alt="kpi" className="block mt-auto opacity-50" />
-          <ActivitySquare className="block mt-5 lg:mt-auto opacity-10 h-40 w-40 text-blue-500" />
+          <ActivitySquare className="block mt-5 lg:mt-auto h-40 w-40 text-[#EFF6FF]" />
         )}
       </div>
     </motion.div>

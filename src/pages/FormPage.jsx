@@ -3,7 +3,24 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import FormInput from "../components/FormInput";
 import { useClinic } from "../contexts/ClinicContext";
-import { ArrowLeft, CheckCircle, Camera, RotateCw, X } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  CheckCircle,
+  Camera,
+  Upload,
+  File,
+  Aperture,
+  RotateCw,
+  X,
+} from "lucide-react";
+import Cardiology from "../assets/images/Cardiology.png";
+import Neurology from "../assets/images/Neurology.png";
+import Pulmonology from "../assets/images/Pulmonology.png";
+import Urology from "../assets/images/Urology.png";
+import Gastroenterology from "../assets/images/Gastroenterology.png";
+import InternalMedicine from "../assets/images/InternalMedicine.png";
+import GeneralPractitioner from "../assets/images/GeneralPractitioner.png";
 
 const FormPage = () => {
   const { selectedClinic } = useClinic();
@@ -22,6 +39,16 @@ const FormPage = () => {
     file: null,
     picture: null,
   });
+
+  const clinicIcon = {
+    Cardiology: Cardiology,
+    "General Practitioner": GeneralPractitioner,
+    "Internal Medicine": InternalMedicine,
+    Pulmonology: Pulmonology,
+    Neurology: Neurology,
+    Nephrology: Urology,
+    Gastroenterology: Gastroenterology,
+  };
 
   useEffect(() => {
     return () => {
@@ -194,36 +221,64 @@ const FormPage = () => {
             onClick={() => navigate("/")}
             className="inline-flex items-center text-white hover:underline mb-2"
           >
-            <ArrowLeft className="w-4 h-4 mr-1" /> Back
+            <ArrowRight className="w-4 h-4 ml-1" /> العودة
           </button>
-          <h1 className="text-2xl font-bold text-white">
-            {selectedClinic.name} Analysis
-          </h1>
+          <div className="flex items-center gap-4">
+            <div
+              className={`bg-white bg-opacity-20 ${
+                selectedClinic.name === "General Practitioner" ? "p-0" : "p-1"
+              } rounded-lg`}
+            >
+              <img
+                src={`${clinicIcon[selectedClinic.name]}`}
+                width={
+                  selectedClinic.name === "General Practitioner" ? 230 : 50
+                }
+                height={
+                  selectedClinic.name === "General Practitioner" ? 230 : 50
+                }
+                alt=""
+              />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-white">
+                تشخيص {selectedClinic.nameAR}
+              </h1>
+              <p className="mt-1 text-sm font-medium text-gray-200">
+                {selectedClinic.descriptionAR}
+              </p>
+            </div>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6">
-          <div className="flex items-center justify-center mb-4">
+          <div className="grid grid-cols-2 gap-4 mb-4">
+            {/* Upload File Card */}
             <button
               type="button"
-              className={`px-4 py-2 rounded-l-lg ${
+              onClick={() => toggleCameraMode(false)}
+              className={`p-4 rounded-lg flex flex-col items-center justify-center gap-2 ${
                 !isCameraMode
                   ? "bg-blue-600 text-white"
-                  : "bg-blue-50 text-gray-700"
-              }`}
-              onClick={() => toggleCameraMode(false)}
+                  : "bg-blue-50 text-gray-700 hover:bg-blue-100"
+              } transition-colors border border-gray-200`}
             >
-              Upload File
+              <File className="w-8 h-8" />
+              <span className="font-medium">رفع ملف</span>
             </button>
+
+            {/* Take Picture Card */}
             <button
               type="button"
-              className={`px-4 py-2 rounded-r-lg ${
+              onClick={() => toggleCameraMode(true)}
+              className={`p-4 rounded-lg flex flex-col items-center justify-center gap-2 ${
                 isCameraMode
                   ? "bg-blue-600 text-white"
-                  : "bg-blue-50 text-gray-700"
-              }`}
-              onClick={() => toggleCameraMode(true)}
+                  : "bg-blue-50 text-gray-700 hover:bg-blue-100"
+              } transition-colors border border-gray-200`}
             >
-              Take Picture
+              <Camera className="w-8 h-8" />
+              <span className="font-medium">أخذ صورة</span>
             </button>
           </div>
 
@@ -247,7 +302,7 @@ const FormPage = () => {
                     className="flex-1 py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2"
                   >
                     <RotateCw className="w-4 h-4" />
-                    Retake
+                    إعادة
                   </button>
                   <button
                     type="button"
@@ -258,13 +313,13 @@ const FormPage = () => {
                     className="py-2 px-4 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 flex items-center justify-center gap-2"
                   >
                     <X className="w-4 h-4" />
-                    Cancel
+                    الغاء
                   </button>
                 </div>
               </div>
             ) : (
               <div className="mb-4">
-                <div className="relative bg-gray-100 rounded-lg overflow-hidden mb-2">
+                <div className="relative bg-gray-100 rounded-lg overflow-hidden mb-4">
                   <video
                     ref={videoRef}
                     autoPlay
@@ -283,14 +338,18 @@ const FormPage = () => {
                     </button>
                   </div>
                 </div>
+                <p className="text-sm text-gray-500 mt-2 mb-4">
+                  <span className="text-red-500 ml-1">*</span>
+                  يمكنك أخذ صورة للمشكلة الصحية التي تواجهك
+                </p>
                 <div className="flex gap-2">
                   <button
                     type="button"
                     onClick={captureImage}
                     className="flex-1 py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2"
                   >
-                    <Camera className="w-4 h-4" />
-                    Capture
+                    <Aperture className="w-4 h-4" />
+                    تصوير
                   </button>
                   <button
                     type="button"
@@ -301,14 +360,14 @@ const FormPage = () => {
                     className="py-2 px-4 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 flex items-center justify-center gap-2"
                   >
                     <X className="w-4 h-4" />
-                    Cancel
+                    الغاء
                   </button>
                 </div>
               </div>
             )
           ) : (
             <FormInput
-              label="Medical Record or Document"
+              label="التقرير الصحي"
               type="file"
               id="file"
               accept="*"
@@ -320,30 +379,33 @@ const FormPage = () => {
 
           <div className="grid grid-cols-1">
             <FormInput
-              label="Model Type"
+              label="نوع النموذج"
               type="select"
               id="modelType"
               value={formData.modelType}
               onChange={handleInputChange}
               options={[
-                { value: "MediCare", label: "MediCare (Fast Response)" },
-                { value: "MediCarePro", label: "MediCare Pro (Secure Model)" },
+                { value: "MediCare", label: "رفيق الصحة (استجابة سريعة)" },
+                {
+                  value: "MediCarePro",
+                  label: "رفيق الصحة المتقدم (نموذج آمن)",
+                },
               ]}
             />
           </div>
 
-          <div className="mt-6">
+          <div>
             <label
               htmlFor="symptoms"
               className="block mb-2 text-sm font-medium text-gray-700"
             >
-              Symptoms Description
+              وصف الأعراض
             </label>
             <textarea
               id="symptomsDescription"
               rows={4}
               className="bg-white border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 transition-all duration-200"
-              placeholder="Please describe your symptoms"
+              placeholder="قم بوصف الأعراض الصحية (اختياري)"
               value={formData.symptomsDescription}
               onChange={handleInputChange}
             ></textarea>
@@ -381,10 +443,10 @@ const FormPage = () => {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  Processing...
+                  جاري التشخيص...
                 </>
               ) : (
-                "Start Analysis"
+                "تشخيص الحالة"
               )}
             </button>
           </div>

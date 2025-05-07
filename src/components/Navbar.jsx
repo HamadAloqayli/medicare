@@ -11,8 +11,8 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
               <ActivitySquare className="h-8 w-8 text-blue-500" />
-              <span className="ml-2 text-xl font-semibold text-gray-800">
-                MediCare
+              <span className="mr-2 text-xl font-semibold text-gray-800">
+                رفيق الصحة
               </span>
             </Link>
           </div>
@@ -20,8 +20,8 @@ const Navbar = () => {
             <button className="bg-blue-50 border-2 border-blue-200 rounded-md hover:shadow-md hover:shadow-blue-100 transition-all duration-300 ease-out  flex justify-center items-center gap-2 p-2">
               <FaUser className="text-blue-400 text-sm" />
 
-              <span className="text-gray-700 text-sm font-medium">
-                Khalid Abdulaziz
+              <span className="text-gray-700 text-sm font-semibold">
+                خالد عبدالعزيز
               </span>
             </button>
 

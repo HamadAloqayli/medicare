@@ -1,5 +1,5 @@
-import React from 'react';
-import { Heart } from 'lucide-react';
+import React from "react";
+import { Heart } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -8,12 +8,12 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
             <p className="text-gray-600 text-sm">
-              © {new Date().getFullYear()} MediCare. All rights reserved.
+              رفيق الصحة © جميع الحقوق محفوظة {new Date().getFullYear()}
             </p>
           </div>
           <div className="flex items-center space-x-4">
             <p className="text-gray-600 text-sm flex items-center">
-              Made with <Heart className="h-4 w-4 text-red-500 mx-1" /> for better healthcare
+              صنع بـ <Heart className="h-4 w-4 text-red-500 mx-1" /> لرعاية أفضل
             </p>
           </div>
         </div>

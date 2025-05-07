@@ -37,11 +37,11 @@ const HomePage = () => {
         className="mb-16"
       >
         <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-          Welcome Khalid 👋
+          مرحبا خالد 👋
         </h1>
         <p className="text-xl text-gray-600 max-w-3xl">
-          Check your health using artificial intelligence to analyze medical
-          reports
+          تطمن على صحتك باستخدام الذكاء الاصطناعي لتحليل التقارير الطبية وتشخيص
+          الحالات
         </p>
       </motion.div>
 
@@ -66,6 +66,8 @@ const HomePage = () => {
               name={clinic.name}
               icon={clinic.icon}
               description={clinic.description}
+              nameAR={clinic.nameAR}
+              descriptionAR={clinic.descriptionAR}
             />
           </motion.div>
         ))}
