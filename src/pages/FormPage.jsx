@@ -10,6 +10,7 @@ import {
   Camera,
   Upload,
   File,
+  SwitchCamera,
   Aperture,
   RotateCw,
   X,
@@ -114,26 +115,36 @@ const FormPage = () => {
     setIsCameraMode(mode);
   };
 
-  const captureImage = () => {
-    if (!videoRef.current) return;
+  const captureImage = async () => {
+    if (!videoRef.current) return null;
 
-    const canvas = document.createElement("canvas");
-    canvas.width = videoRef.current.videoWidth;
-    canvas.height = videoRef.current.videoHeight;
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+    try {
+      const canvas = document.createElement("canvas");
+      canvas.width = videoRef.current.videoWidth;
+      canvas.height = videoRef.current.videoHeight;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
 
-    canvas.toBlob(
-      (blob) => {
-        const file = new File([blob], "captured-image.jpg", {
-          type: "image/jpeg",
-        });
-        setFormData({ ...formData, picture: file });
-        stopCamera();
-      },
-      "image/jpeg",
-      0.95
-    );
+      const blob = await new Promise((resolve) =>
+        canvas.toBlob(resolve, "image/jpeg", 0.95)
+      );
+
+      if (!blob) throw new Error("Failed to create blob");
+
+      const file = new (window.File || File)(
+        [blob],
+        `captured-${Date.now()}.jpg`,
+        { type: "image/jpeg", lastModified: Date.now() }
+      );
+
+      setFormData({ ...formData, picture: file });
+      stopCamera();
+      return file;
+    } catch (error) {
+      console.error("Capture failed:", error);
+      stopCamera();
+      return null;
+    }
   };
 
   const handleInputChange = (e) => {
@@ -334,7 +345,7 @@ const FormPage = () => {
                       className="p-2 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-70 transition-all"
                       title="Flip camera"
                     >
-                      <RotateCw className="w-4 h-4" />
+                      <SwitchCamera className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
