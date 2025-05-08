@@ -20,9 +20,11 @@ const Navbar = () => {
             <button className="bg-blue-50 border-2 border-blue-200 rounded-md hover:shadow-md hover:shadow-blue-100 transition-all duration-300 ease-out  flex justify-center items-center gap-2 p-2">
               <FaUser className="text-blue-400 text-sm" />
 
-              <span className="text-gray-700 text-sm font-semibold">
-                خالد عبدالعزيز
-              </span>
+              <Link to={"/profile"}>
+                <span className="text-gray-700 text-sm font-semibold">
+                  خالد عبدالعزيز
+                </span>
+              </Link>
             </button>
 
             {/* <Link 

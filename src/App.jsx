@@ -1,10 +1,11 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import HomePage from './pages/HomePage';
-import FormPage from './pages/FormPage';
-import { ClinicProvider } from './contexts/ClinicContext';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import HomePage from "./pages/HomePage";
+import FormPage from "./pages/FormPage";
+import { ClinicProvider } from "./contexts/ClinicContext";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/form" element={<FormPage />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </main>
         <Footer />
