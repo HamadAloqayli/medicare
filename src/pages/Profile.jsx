@@ -22,7 +22,7 @@ import Urology from "../assets/images/Urology.png";
 import Gastroenterology from "../assets/images/Gastroenterology.png";
 import InternalMedicine from "../assets/images/InternalMedicine.png";
 import GeneralPractitioner from "../assets/images/GeneralPractitioner.png";
-import UserProfile from "../assets/images/UserProfile.png";
+import UserProfile from "../assets/images/userProfile.png";
 import kpi from "../assets/images/kpi.png";
 import { ActivitySquare } from "lucide-react";
 
