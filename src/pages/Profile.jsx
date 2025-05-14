@@ -33,7 +33,7 @@ const Profile = () => {
     email: "khalid@example.com",
     phone: "0501234567",
     gender: "ذكر",
-    sehatyStatus: "متصل",
+    sehatyStatus: "تم الربط",
     bloodType: "O+",
     height: "175 سم",
     weight: "70 كغ",
@@ -384,21 +384,14 @@ const Profile = () => {
           variants={itemVariants}
           className="bg-white rounded-xl shadow-md overflow-hidden md:col-span-3"
         >
-          <div className="p-8">
+          <div className="p-4 sm:p-8">
             <h2 className="text-xl font-semibold text-gray-800 mb-6 text-right">
               حالة الطوارئ
             </h2>
 
-            <div className="flex items-center justify-between bg-blue-50 p-6 rounded-xl">
-              <div className="flex items-center">
-                {/* <AlertTriangle
-                  className={`h-12 w-12 ${
-                    emergencyStatus.needDoctor
-                      ? "text-red-500"
-                      : "text-green-500"
-                  } ml-4`}
-                /> */}
-                <img width={100} className="ml-6" src={kpi} alt="kpi" />
+            <div className="flex flex-col sm:flex-row items-center justify-between bg-blue-50 p-4 sm:p-6 rounded-xl gap-4 sm:gap-0">
+              <div className="flex flex-col sm:flex-row items-center text-center sm:text-right gap-4 sm:gap-0">
+                <img width={80} className="sm:ml-6" src={kpi} alt="kpi" />
                 <div>
                   <h3 className="text-lg font-medium text-gray-800">
                     {emergencyStatus.level} المخاطر
@@ -407,16 +400,24 @@ const Profile = () => {
                 </div>
               </div>
 
-              <div className="flex space-x-4">
-                <button className="bg-red-500 text-white px-4 py-2 rounded-lg flex items-center ml-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
+                <button className="bg-red-500 text-white px-4 py-2 rounded-lg flex items-center justify-center sm:justify-start w-full sm:w-auto">
                   <Ambulance className="h-5 w-5 ml-2" />
-                  <a href="tel:937" target="_blank">
+                  <a
+                    href="tel:937"
+                    target="_blank"
+                    className="w-full text-center sm:text-right"
+                  >
                     اتصل بالطوارئ
                   </a>
                 </button>
-                <button className="bg-green-500 text-white px-4 py-2 rounded-lg flex items-center">
+                <button className="bg-green-500 text-white px-4 py-2 rounded-lg flex items-center justify-center sm:justify-start w-full sm:w-auto">
                   <Activity className="h-5 w-5 ml-2" />
-                  <a href="https://www.seha.sa/" target="_blank">
+                  <a
+                    href="https://www.seha.sa/"
+                    target="_blank"
+                    className="w-full text-center sm:text-right"
+                  >
                     تطبيق صحتي
                   </a>
                 </button>
