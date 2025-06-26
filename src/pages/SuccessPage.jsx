@@ -13,10 +13,10 @@ const SuccessPage = () => {
   const clinicInfo = location.state?.clinicInfo || selectedClinic;
 
   useEffect(() => {
-    // Auto redirect to home after 10 seconds
+    // Auto redirect to home after 30 seconds
     const timer = setTimeout(() => {
       navigate("/");
-    }, 10000);
+    }, 30000);
 
     return () => clearTimeout(timer);
   }, [navigate]);
@@ -47,22 +47,20 @@ const SuccessPage = () => {
             transition={{ delay: 0.3 }}
           >
             <h1 className="text-2xl font-bold text-gray-800 mb-3">
-              تم إرسال الطلب بنجاح!
+              شكراً لاهتمامك!
             </h1>
 
             <p className="text-gray-600 mb-6 leading-relaxed">
-              لقد تم استلام طلبك لـ{" "}
-              <span className="font-semibold text-blue-600">
-                {clinicInfo?.nameAR || "العيادة المختارة"}
-              </span>
-              . سيقوم فريقنا بالتواصل معك قريباً لتأكيد تفاصيل طلبك.
+              بتجربة نظام رفيق الصحة. هذه نسخة تجريبية مخصصة للعرض فقط، وقد تم
+              إيقاف الخدمات الخلفية (Backend) المرتبطة بواجهة البرمجة (API) بهدف
+              تقليل استهلاك الموارد.
             </p>
 
             {/* Additional Info */}
             <div className="bg-blue-50 rounded-lg p-4 mb-6">
               <p className="text-sm text-blue-800">
-                <span className="font-semibold">ملاحظة:</span> سيتم إرسال
-                النتائج إلى بريدك الإلكتروني أو رقم هاتفك المسجل.
+                <span className="font-semibold">ملاحظة:</span> هذا عرض تجريبي
+                للنظام. في النسخة الكاملة، سيتم معالجة طلبك وإرسال النتائج إليك.
               </p>
             </div>
 
@@ -81,13 +79,13 @@ const SuccessPage = () => {
                 className="w-full py-2 px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
               >
                 <ArrowLeft className="w-4 h-4" />
-                إرسال طلب آخر
+                تجربة أخرى
               </button>
             </div>
 
             {/* Auto redirect notice */}
             <p className="text-xs text-gray-500 mt-4">
-              سيتم توجيهك تلقائياً للصفحة الرئيسية خلال 10 ثوانٍ
+              سيتم توجيهك تلقائياً للصفحة الرئيسية خلال 30 ثانية
             </p>
           </motion.div>
         </div>
