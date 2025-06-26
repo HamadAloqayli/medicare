@@ -27,7 +27,6 @@ const FormPage = () => {
   const { selectedClinic } = useClinic();
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
   const [isCameraMode, setIsCameraMode] = useState(false);
   const [facingMode, setFacingMode] = useState("environment"); // 'user' for front, 'environment' for back
   const videoRef = useRef(null);
@@ -175,49 +174,24 @@ const FormPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setIsSubmitting(true);
+    setIsSubmitting(true);
 
     console.log(formData);
 
     // Simulate form submission
-    // setTimeout(() => {
-    //   setIsSubmitting(false);
-    //   setIsSuccess(true);
-
-    //   // Reset after showing success message
-    //   setTimeout(() => {
-    //     setIsSuccess(false);
-    //     navigate("/");
-    //   }, 3000);
-    // }, 1500);
+    setTimeout(() => {
+      setIsSubmitting(false);
+      // Navigate to success page with clinic info
+      navigate("/success", {
+        state: {
+          clinicInfo: selectedClinic,
+        },
+      });
+    }, 1500);
   };
 
   if (!selectedClinic) {
     return (window.location = "/");
-  }
-
-  if (isSuccess) {
-    return (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto text-center"
-      >
-        <div className="bg-white p-8 rounded-xl shadow-md">
-          <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
-            <CheckCircle className="h-10 w-10 text-green-500" />
-          </div>
-          <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-            Request Submitted!
-          </h2>
-          <p className="text-gray-600 mb-6">
-            We've received your request for {selectedClinic.name}. Our team will
-            contact you shortly to confirm your request details.
-          </p>
-          <p className="text-sm text-gray-500">Redirecting to home page...</p>
-        </div>
-      </motion.div>
-    );
   }
 
   return (
@@ -430,7 +404,7 @@ const FormPage = () => {
                 isSubmitting
                   ? "bg-blue-400 cursor-not-allowed"
                   : "bg-blue-600 hover:bg-blue-700"
-              } text-white font-medium rounded-lg text-center transition-colors duration-200 flex items-center justify-center`}
+              } text-white font-medium rounded-lg text-center transition-colors duration-200 flex gap-4 items-center justify-center`}
             >
               {isSubmitting ? (
                 <>
